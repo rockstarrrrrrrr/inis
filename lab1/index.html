@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фильмотека</title>
+</head>
+<body>
+<h1>Список просмотренных фильмов</h1>
+<div id="movieTable"></div>
+
+<script>
+    let numberOfFilms;
+
+    do {
+    numberOfFilms = prompt('Сколько фильмов вы уже посмотрели?', '');
+} while (numberOfFilms === null || numberOfFilms.trim() === '' || isNaN(numberOfFilms));
+
+    const personalMovieDB = {
+    count: +numberOfFilms,
+    movies: {}
+};
+
+    for (let i = 0; i < 2; i++) {
+    let lastMovie, movieRating;
+
+    do {
+    lastMovie = prompt('Один из последних просмотренных фильмов?', '').trim();
+} while (!lastMovie || lastMovie.length > 50);
+
+    do {
+    movieRating = prompt('На сколько оцените его?', '').trim();
+} while (!movieRating || isNaN(movieRating));
+
+    personalMovieDB.movies[lastMovie] = movieRating;
+}
+
+    console.log(personalMovieDB);
+
+    function displayMovies() {
+    const container = document.getElementById('movieTable');
+    const table = document.createElement('table');
+    table.border = '1';
+
+    const headerRow = document.createElement('tr');
+    const header1 = document.createElement('th');
+    header1.textContent = 'Фильм';
+    const header2 = document.createElement('th');
+    header2.textContent = 'Оценка';
+
+    headerRow.appendChild(header1);
+    headerRow.appendChild(header2);
+    table.appendChild(headerRow);
+
+    for (let movie in personalMovieDB.movies) {
+    const row = document.createElement('tr');
+
+    const cell1 = document.createElement('td');
+    cell1.textContent = movie;
+    const cell2 = document.createElement('td');
+    cell2.textContent = personalMovieDB.movies[movie];
+
+    row.appendChild(cell1);
+    row.appendChild(cell2);
+    table.appendChild(row);
+}
+
+    container.appendChild(table);
+}
+
+    displayMovies();
+</script>
+</body>
+</html>
